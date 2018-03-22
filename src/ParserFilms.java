@@ -13,7 +13,7 @@ public class ParserFilms {
     ResultSet resultSet;
     void listFilms(){
 
-        File filmsFolder = new File("/home/alex/Development/films");
+        File filmsFolder = new File("C:\\Apache24\\htdocs\\films");
         File[] films = filmsFolder.listFiles();
         Properties connInfo = new Properties();
         connInfo.put("user", "root");
@@ -42,7 +42,7 @@ public class ParserFilms {
                 statement.setString(1, new Gson().toJson(namesArray));
                 statement.setInt(2,5);
                 statement.setString(3, description);
-                statement.setString(4,film.getPath() + "/poster.jpg");
+                statement.setString(4,"http://localhost/films/" + film.getName() + "/poster.png");
                 statement.setString(5, film.getPath() + "filmName");
                 statement.setInt(6,Integer.parseInt(year.trim()));
                 statement.executeUpdate();
