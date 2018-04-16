@@ -21,7 +21,8 @@ public class ParserFilms {
         connInfo.put("useUnicode","true"); // (1)
         connInfo.put("charSet", "UTF8"); // (2)
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/films?", connInfo);
-             PreparedStatement statement = connection.prepareStatement("INSERT INTO films(name_film, rating, description, poster, path, year_of_release) VALUE (?, ?, ?, ?, ?, ?)")) {
+             PreparedStatement statementFilms = connection.prepareStatement("INSERT INTO films(rating, description, poster, path, year_of_release) VALUE (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement statementNames = connection.prepareStatement("INSERT INTO names_film (name_film, id_film) VALUE (?, ?)")) {
 
             for (File film:films) {
 
@@ -32,22 +33,25 @@ public class ParserFilms {
                 String Producer = new String(Files.readAllBytes(Paths.get(film.getPath() + "/Producer.txt")));
                 String year = new String(Files.readAllBytes(Paths.get(film.getPath() + "/year.txt")));
 
-                String[] namesArray = names.split(" / ");
+                statementFilms.setInt(1,5);
+                statementFilms.setString(2, description);
+                statementFilms.setString(3,"http://localhost/films/" + film.getName() + "/poster.png");
+                statementFilms.setString(4, film.getPath() + "filmName");
+                statementFilms.setInt(5,Integer.parseInt(year.trim()));
+                statementFilms.executeUpdate();
+
+                ResultSet generatedKeys = statementFilms.getGeneratedKeys();
+                generatedKeys.next();
+                int id = generatedKeys.getInt(1);
+                System.out.println("id: " + id);
+
+                 String[] namesArray = names.split(" / ");
                 for (int i = 0; i<namesArray.length; i++) {
-                    namesArray[i] = namesArray[i].trim();
+
+                    statementNames.setString(1, namesArray[i].trim());
+                    statementNames.setInt(2, id);
+                    statementNames.executeUpdate();
                 }
-
-
-
-                statement.setString(1, new Gson().toJson(namesArray));
-                statement.setInt(2,5);
-                statement.setString(3, description);
-                statement.setString(4,"http://localhost/films/" + film.getName() + "/poster.png");
-                statement.setString(5, film.getPath() + "filmName");
-                statement.setInt(6,Integer.parseInt(year.trim()));
-                statement.executeUpdate();
-//                resultSet.next();
-//                System.out.println(resultSet.getString("DATABASE()"));
 
             }//for
         }catch (SQLException | IOException e){
