@@ -4,5 +4,8 @@ public class Main {
 
         ParserFilms parserFilms = new ParserFilms();
         parserFilms.listFilms();
+
+//        ParseGenresSSH parseGenresSSH = new ParseGenresSSH();
+//        parseGenresSSH.connect();
     }
 }

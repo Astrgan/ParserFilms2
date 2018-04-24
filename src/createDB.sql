@@ -1,8 +1,7 @@
+
 drop database if exists films;
 CREATE DATABASE films CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-
 use films;
-
 create table films(
   id_film int not null auto_increment,
   rating decimal(2,1),
@@ -23,27 +22,42 @@ create table names_film(
 
 
 create table genres(
-  id_genres int not null auto_increment,
-  genres varchar(100) not null,
-  primary key (id_genres)
+  genre varchar(100) not null,
+  primary key (genre)
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+
+create table countrys(
+  country varchar(100) not null,
+  primary key (country)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table actors(
-  id_actors int not null auto_increment,
-  first_name varchar(100),
-  last_name varchar(100),
+  name_actor varchar(200) not null,
   portrait varchar(100),
-  primary key(id_actors)
+  primary key(name_actor)
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+
+create table connections_countrys(
+  id_connection int not null auto_increment,
+  film int not null,
+  country varchar(100) not null,
+  foreign key (film) references films(id_film)
+    on update cascade
+    on delete restrict,
+  foreign key (country) references countrys(country)
+    on update cascade
+    on delete restrict,
+  primary key(id_connection)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table connections_actors(
   id_connection int not null auto_increment,
-  name_films int not null,
-  actors int not null,
-  foreign key (name_films) references films(id_film)
+  film int not null,
+  actor varchar(200) not null,
+  foreign key (film) references films(id_film)
     on update cascade
     on delete restrict,
-  foreign key (actors) references actors(id_actors)
+  foreign key (actor) references actors(name_actor)
     on update cascade
     on delete restrict,
   primary key(id_connection)
@@ -51,12 +65,12 @@ create table connections_actors(
 
 create table connections_genres(
   id_connection int not null auto_increment,
-  name_films int not null,
-  genres int not null,
-  foreign key (name_films) references films(id_film)
+  film int not null,
+  genre varchar(100) not null,
+  foreign key (film) references films(id_film)
     on update cascade
     on delete restrict,
-  foreign key (genres) references genres(id_genres)
+  foreign key (genre) references genres(genre)
     on update cascade
     on delete restrict,
   primary key(id_connection)

@@ -1,4 +1,3 @@
-import com.google.gson.Gson;
 import com.mysql.jdbc.Statement;
 
 import java.io.File;
@@ -13,16 +12,23 @@ public class ParserFilms {
     ResultSet resultSet;
     void listFilms(){
 
-        File filmsFolder = new File("C:\\Apache24\\htdocs\\films");
+        File filmsFolder = new File("/var/www/html/films");
         File[] films = filmsFolder.listFiles();
         Properties connInfo = new Properties();
-        connInfo.put("user", "root");
+        connInfo.put("user", "alex");
         connInfo.put("password", "angel");
         connInfo.put("useUnicode","true"); // (1)
         connInfo.put("charSet", "UTF8"); // (2)
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/films?", connInfo);
              PreparedStatement statementFilms = connection.prepareStatement("INSERT INTO films(rating, description, poster, path, year_of_release) VALUE (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement statementNames = connection.prepareStatement("INSERT INTO names_film (name_film, id_film) VALUE (?, ?)")) {
+             PreparedStatement statementNames = connection.prepareStatement("INSERT INTO names_film (name_film, id_film) VALUE (?, ?)");
+             PreparedStatement statementGenres = connection.prepareStatement("INSERT INTO genres (genre) VALUE (?)");
+             PreparedStatement statementConnGenres = connection.prepareStatement("INSERT INTO connections_genres (film, genre) VALUE (?, ?)");
+             PreparedStatement statementActors = connection.prepareStatement("INSERT INTO actors (name_actor) VALUE (?)");
+             PreparedStatement statementConnActors = connection.prepareStatement("INSERT INTO connections_actors (film, actor) VALUE (?, ?)");
+             PreparedStatement statementCountries = connection.prepareStatement("INSERT INTO countrys (country) VALUE (?)");
+             PreparedStatement statementConnCountries = connection.prepareStatement("INSERT INTO connections_countrys (film, country) VALUE (?, ?)");
+             ) {
 
             for (File film:films) {
 
@@ -32,10 +38,11 @@ public class ParserFilms {
                 String names = new String(Files.readAllBytes(Paths.get(film.getPath() + "/names.txt")));
                 String Producer = new String(Files.readAllBytes(Paths.get(film.getPath() + "/Producer.txt")));
                 String year = new String(Files.readAllBytes(Paths.get(film.getPath() + "/year.txt")));
+                String countries = new String(Files.readAllBytes(Paths.get(film.getPath() + "/countries.txt")));
 
                 statementFilms.setInt(1,5);
                 statementFilms.setString(2, description);
-                statementFilms.setString(3,"http://localhost/films/" + film.getName() + "/poster.png");
+                statementFilms.setString(3,"http://93.170.123.54/films/" + film.getName() + "/poster.png");
                 statementFilms.setString(4, film.getPath() + "filmName");
                 statementFilms.setInt(5,Integer.parseInt(year.trim()));
                 statementFilms.executeUpdate();
@@ -43,9 +50,9 @@ public class ParserFilms {
                 ResultSet generatedKeys = statementFilms.getGeneratedKeys();
                 generatedKeys.next();
                 int id = generatedKeys.getInt(1);
-                System.out.println("id: " + id);
 
-                 String[] namesArray = names.split(" / ");
+
+                String[] namesArray = names.split(" / ");
                 for (int i = 0; i<namesArray.length; i++) {
 
                     statementNames.setString(1, namesArray[i].trim());
@@ -53,8 +60,59 @@ public class ParserFilms {
                     statementNames.executeUpdate();
                 }
 
+                String[] genresArray = genres.split(", ");
+
+                for (int i = 0; i<genresArray.length; i++) {
+                    String genre = genresArray[i].trim();
+                    try {
+                        statementGenres.setString(1, genre);
+                        statementGenres.executeUpdate();
+                        //System.out.println(genresArray[i].trim() + " - Добавлен");
+                    }catch (Exception e){
+                        //System.out.println(genresArray[i].trim() + " - Уже есть в базе");
+                    }
+
+                    statementConnGenres.setInt(1, id);
+                    statementConnGenres.setString(2, genre);
+                    statementConnGenres.executeUpdate();
+
+                }
+
+
+                String[] actorsArray = actors.split(", ");
+
+                for (int i = 0; i<actorsArray.length; i++) {
+                    String actor = actorsArray[i];
+                    try{
+                        if (actor.contains("(")) actor = actorsArray[i].substring(0, actorsArray[i].indexOf("(") - 1);
+                        statementActors.setString(1, actor.trim());
+                        statementActors.executeUpdate();
+                    }catch (Exception e){
+                        //System.out.println(actorsArray[i].trim() + " - Уже есть в базе");
+                    }
+
+                    statementConnActors.setInt(1, id);
+                    statementConnActors.setString(2, actor.trim());
+                    statementConnActors.executeUpdate();
+                }
+
+                String[] countriesArray = countries.split(", ");
+                for (int i = 0; i<countriesArray.length; i++) {
+                    String country = countriesArray[i];
+                    try{
+                        statementCountries.setString(1, country.trim());
+                        statementCountries.executeUpdate();
+                    }catch (Exception e){
+                        //System.out.println(actorsArray[i].trim() + " - Уже есть в базе");
+                    }
+
+                    statementConnCountries.setInt(1, id);
+                    statementConnCountries.setString(2, country.trim());
+                    statementConnCountries.executeUpdate();
+                }
+
             }//for
-        }catch (SQLException | IOException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
 
