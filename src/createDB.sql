@@ -26,7 +26,7 @@ create table genres(
   primary key (genre)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
-create table countrys(
+create table countries(
   country varchar(100) not null,
   primary key (country)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
@@ -37,14 +37,14 @@ create table actors(
   primary key(name_actor)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
-create table connections_countrys(
+create table connections_countries (
   id_connection int not null auto_increment,
   film int not null,
   country varchar(100) not null,
   foreign key (film) references films(id_film)
     on update cascade
     on delete restrict,
-  foreign key (country) references countrys(country)
+  foreign key (country) references countries(country)
     on update cascade
     on delete restrict,
   primary key(id_connection)

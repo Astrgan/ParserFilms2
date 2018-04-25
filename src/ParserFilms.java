@@ -26,8 +26,8 @@ public class ParserFilms {
              PreparedStatement statementConnGenres = connection.prepareStatement("INSERT INTO connections_genres (film, genre) VALUE (?, ?)");
              PreparedStatement statementActors = connection.prepareStatement("INSERT INTO actors (name_actor) VALUE (?)");
              PreparedStatement statementConnActors = connection.prepareStatement("INSERT INTO connections_actors (film, actor) VALUE (?, ?)");
-             PreparedStatement statementCountries = connection.prepareStatement("INSERT INTO countrys (country) VALUE (?)");
-             PreparedStatement statementConnCountries = connection.prepareStatement("INSERT INTO connections_countrys (film, country) VALUE (?, ?)");
+             PreparedStatement statementCountries = connection.prepareStatement("INSERT INTO countries (country) VALUE (?)");
+             PreparedStatement statementConnCountries = connection.prepareStatement("INSERT INTO connections_countries (film, country) VALUE (?, ?)")
              ) {
 
             for (File film:films) {
