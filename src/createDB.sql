@@ -20,6 +20,10 @@ create table names_film(
 
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
+create table writers(
+  name_writers varchar(100) not null,
+  primary key (name_writers)
+)ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table genres(
   genre varchar(100) not null,
@@ -35,6 +39,19 @@ create table actors(
   name_actor varchar(200) not null,
   portrait varchar(100),
   primary key(name_actor)
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+
+create table connections_writers (
+  id_connection int not null auto_increment,
+  film int not null,
+  writers varchar(100) not null,
+  foreign key (film) references films(id_film)
+    on update cascade
+    on delete restrict,
+  foreign key (writers) references writers(name_writers)
+    on update cascade
+    on delete restrict,
+  primary key(id_connection)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table connections_countries (

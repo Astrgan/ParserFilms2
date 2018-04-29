@@ -27,7 +27,10 @@ public class ParserFilms {
              PreparedStatement statementActors = connection.prepareStatement("INSERT INTO actors (name_actor) VALUE (?)");
              PreparedStatement statementConnActors = connection.prepareStatement("INSERT INTO connections_actors (film, actor) VALUE (?, ?)");
              PreparedStatement statementCountries = connection.prepareStatement("INSERT INTO countries (country) VALUE (?)");
-             PreparedStatement statementConnCountries = connection.prepareStatement("INSERT INTO connections_countries (film, country) VALUE (?, ?)")
+             PreparedStatement statementConnCountries = connection.prepareStatement("INSERT INTO connections_countries (film, country) VALUE (?, ?)");
+             PreparedStatement statementWriters = connection.prepareStatement("INSERT INTO writers (name_writers) VALUE (?)");
+             PreparedStatement statementConnWriters = connection.prepareStatement("INSERT INTO connections_writers (film, writers) VALUE (?, ?)")
+
              ) {
 
             for (File film:films) {
@@ -36,7 +39,7 @@ public class ParserFilms {
                 String description = new String(Files.readAllBytes(Paths.get(film.getPath() + "/description.txt")));
                 String genres = new String(Files.readAllBytes(Paths.get(film.getPath() + "/genres.txt")));
                 String names = new String(Files.readAllBytes(Paths.get(film.getPath() + "/names.txt")));
-                String Producer = new String(Files.readAllBytes(Paths.get(film.getPath() + "/Producer.txt")));
+                String writers = new String(Files.readAllBytes(Paths.get(film.getPath() + "/Producer.txt")));
                 String year = new String(Files.readAllBytes(Paths.get(film.getPath() + "/year.txt")));
                 String countries = new String(Files.readAllBytes(Paths.get(film.getPath() + "/countries.txt")));
 
@@ -109,6 +112,22 @@ public class ParserFilms {
                     statementConnCountries.setInt(1, id);
                     statementConnCountries.setString(2, country.trim());
                     statementConnCountries.executeUpdate();
+                }
+
+
+                String[] writersArray = writers.split(", ");
+                for (int i = 0; i<writersArray.length; i++) {
+                    String writer = writersArray[i];
+                    try{
+                        statementWriters.setString(1, writer.trim());
+                        statementWriters.executeUpdate();
+                    }catch (Exception e){
+                        //System.out.println(actorsArray[i].trim() + " - Уже есть в базе");
+                    }
+
+                    statementConnWriters.setInt(1, id);
+                    statementConnWriters.setString(2, writer.trim());
+                    statementConnWriters.executeUpdate();
                 }
 
             }//for
