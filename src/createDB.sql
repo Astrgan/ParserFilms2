@@ -94,6 +94,25 @@ create table connections_genres(
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 show tables;
 
+
+
+create table users(
+  name_user varchar(100) not null,
+  password int not null,
+  avatar varchar(100),
+  primary key(name_user)
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+
+create table comments(
+  id_comment int not null auto_increment,
+  comment varchar(5000) not null,
+  name_user varchar(100) not null,
+  date DATETIME,
+  primary key(id_comment),
+  foreign key (name_user) references users(name_user)
+
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+
 /*
 SELECT name_film FROM names_film;
 
