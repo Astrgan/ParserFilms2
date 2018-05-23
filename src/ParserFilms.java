@@ -45,7 +45,7 @@ public class ParserFilms {
 
                 statementFilms.setInt(1,5);
                 statementFilms.setString(2, description);
-                statementFilms.setString(3,"http://93.170.123.54/films/" + film.getName() + "/poster.png");
+                statementFilms.setString(3,"http://localhost/films/" + film.getName() + "/poster.png");
                 statementFilms.setString(4, film.getPath() + "filmName");
                 statementFilms.setInt(5,Integer.parseInt(year.trim()));
                 statementFilms.executeUpdate();
