@@ -98,7 +98,7 @@ show tables;
 
 create table users(
   name_user varchar(100) not null,
-  password int not null,
+  pass int not null,
   avatar varchar(100),
   primary key(name_user)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
