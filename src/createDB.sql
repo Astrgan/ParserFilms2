@@ -92,15 +92,21 @@ create table connections_genres(
     on delete restrict,
   primary key(id_connection)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
-show tables;
+
 
 create table users(
-  name_user varchar(100) not null,
   email varchar(100) not null,
   pass varchar(100) not null,
   avatar varchar(100),
   status_user bool DEFAULT false,
-  primary key(name_user, email)
+  primary key(email)
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+
+create table names(
+  name_user varchar(100) not null,
+  email varchar(100) not null,
+  primary key(name_user),
+  foreign key (email) references users(email)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table comments(
@@ -113,26 +119,17 @@ create table comments(
 
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
+create table tokens(
+  id_token int not null auto_increment,
+  token varchar(100) not null,
+  email varchar(100) not null,
+  date_token DATETIME,
+  primary key(id_token),
+  foreign key (email) references users(email)
 
+)ENGINE=InnoDB CHARACTER SET=UTF8;
+show tables;
 /*
-SELECT name_film FROM names_film;
-
-select *, (select group_concat(names_film.name_film SEPARATOR ' / ') from names_film where names_film.id_film = films.id_film)  as name_film  from films;
-
-
-SELECT * FROM films left join names_film on films.id_film = names_film.id_film;
-
-select  JSON_ARRAY(GROUP_CONCAT(names_film.name_film SEPARATOR ' / ')) as name_film from names_film where names_film.id_film = 10;
-
-SELECT * FROM films where id_film = (select id_film from names_film where name_film = "Пассажиры");
-SELECT name_film FROM names_film;
-
-
 alter table films add year_of_release int(4);
 alter table films change year_of_release year_of_release int(4);
-describe films;
-
-insert into films(name_film, rating, description, poster, path, year_of_release) values ();
-
-
-select *, (select group_concat(names_film.name_film  SEPARATOR ' / ') from names_film where names_film.id_film = films.id_film) as name_film FROM films WHERE true and films.id_film = (select names_film.id_film from names_film where names_film.name_film = Антропоид)
+*/
