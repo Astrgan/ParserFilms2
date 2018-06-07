@@ -918,28 +918,28 @@
     <table id="230" parent="3" name="actors">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="231" parent="3" name="comments">
+    <table id="231" parent="3" name="connections_actors">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="232" parent="3" name="connections_actors">
+    <table id="232" parent="3" name="connections_countries">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="233" parent="3" name="connections_countries">
+    <table id="233" parent="3" name="connections_genres">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="234" parent="3" name="connections_genres">
+    <table id="234" parent="3" name="connections_writers">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="235" parent="3" name="connections_writers">
+    <table id="235" parent="3" name="countries">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="236" parent="3" name="countries">
+    <table id="236" parent="3" name="films">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="237" parent="3" name="films">
+    <table id="237" parent="3" name="genres">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <table id="238" parent="3" name="genres">
+    <table id="238" parent="3" name="names">
       <Collation>utf8_general_ci</Collation>
     </table>
     <table id="239" parent="3" name="names_film">
@@ -970,395 +970,376 @@
       <ColNames>name_actor</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="246" parent="231" name="id_comment">
+    <column id="246" parent="231" name="id_connection">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="247" parent="231" name="comment">
-      <Position>2</Position>
-      <DataType>varchar(5000)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="248" parent="231" name="email">
-      <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="249" parent="231" name="date">
-      <Position>4</Position>
-      <DataType>datetime|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="250" parent="231" name="email">
-      <ColNames>email</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="251" parent="231" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id_comment</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="252" parent="231" name="comments_ibfk_1">
-      <ColNames>email</ColNames>
-      <RefSchemaName>films</RefSchemaName>
-      <RefTableName>users</RefTableName>
-      <RefColNames>email</RefColNames>
-    </foreign-key>
-    <column id="253" parent="232" name="id_connection">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="254" parent="232" name="film">
+    <column id="247" parent="231" name="film">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="232" name="actor">
+    <column id="248" parent="231" name="actor">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="256" parent="232" name="film">
+    <index id="249" parent="231" name="film">
       <ColNames>film</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="257" parent="232" name="actor">
+    <index id="250" parent="231" name="actor">
       <ColNames>actor</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="258" parent="232" name="PRIMARY">
+    <key id="251" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_connection</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="259" parent="232" name="connections_actors_ibfk_1">
+    <foreign-key id="252" parent="231" name="connections_actors_ibfk_1">
       <ColNames>film</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>films</RefTableName>
       <RefColNames>id_film</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="260" parent="232" name="connections_actors_ibfk_2">
+    <foreign-key id="253" parent="231" name="connections_actors_ibfk_2">
       <ColNames>actor</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>actors</RefTableName>
       <RefColNames>name_actor</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="261" parent="233" name="id_connection">
+    <column id="254" parent="232" name="id_connection">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="262" parent="233" name="film">
+    <column id="255" parent="232" name="film">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="263" parent="233" name="country">
+    <column id="256" parent="232" name="country">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="264" parent="233" name="film">
+    <index id="257" parent="232" name="film">
       <ColNames>film</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="265" parent="233" name="country">
+    <index id="258" parent="232" name="country">
       <ColNames>country</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="266" parent="233" name="PRIMARY">
+    <key id="259" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_connection</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="267" parent="233" name="connections_countries_ibfk_1">
+    <foreign-key id="260" parent="232" name="connections_countries_ibfk_1">
       <ColNames>film</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>films</RefTableName>
       <RefColNames>id_film</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="268" parent="233" name="connections_countries_ibfk_2">
+    <foreign-key id="261" parent="232" name="connections_countries_ibfk_2">
       <ColNames>country</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>countries</RefTableName>
       <RefColNames>country</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="269" parent="234" name="id_connection">
+    <column id="262" parent="233" name="id_connection">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="234" name="film">
+    <column id="263" parent="233" name="film">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="271" parent="234" name="genre">
+    <column id="264" parent="233" name="genre">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="272" parent="234" name="film">
+    <index id="265" parent="233" name="film">
       <ColNames>film</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="273" parent="234" name="genre">
+    <index id="266" parent="233" name="genre">
       <ColNames>genre</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="274" parent="234" name="PRIMARY">
+    <key id="267" parent="233" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_connection</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="275" parent="234" name="connections_genres_ibfk_1">
+    <foreign-key id="268" parent="233" name="connections_genres_ibfk_1">
       <ColNames>film</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>films</RefTableName>
       <RefColNames>id_film</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="276" parent="234" name="connections_genres_ibfk_2">
+    <foreign-key id="269" parent="233" name="connections_genres_ibfk_2">
       <ColNames>genre</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>genres</RefTableName>
       <RefColNames>genre</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="277" parent="235" name="id_connection">
+    <column id="270" parent="234" name="id_connection">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="235" name="film">
+    <column id="271" parent="234" name="film">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="235" name="writers">
+    <column id="272" parent="234" name="writers">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="280" parent="235" name="film">
+    <index id="273" parent="234" name="film">
       <ColNames>film</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="281" parent="235" name="writers">
+    <index id="274" parent="234" name="writers">
       <ColNames>writers</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="282" parent="235" name="PRIMARY">
+    <key id="275" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_connection</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="283" parent="235" name="connections_writers_ibfk_1">
+    <foreign-key id="276" parent="234" name="connections_writers_ibfk_1">
       <ColNames>film</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>films</RefTableName>
       <RefColNames>id_film</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="284" parent="235" name="connections_writers_ibfk_2">
+    <foreign-key id="277" parent="234" name="connections_writers_ibfk_2">
       <ColNames>writers</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>writers</RefTableName>
       <RefColNames>name_writers</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="285" parent="236" name="country">
+    <column id="278" parent="235" name="country">
       <Position>1</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="286" parent="236" name="PRIMARY">
+    <key id="279" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>country</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="287" parent="237" name="id_film">
+    <column id="280" parent="236" name="id_film">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="237" name="rating">
+    <column id="281" parent="236" name="rating">
       <Position>2</Position>
       <DataType>decimal(2,1 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="237" name="description">
+    <column id="282" parent="236" name="description">
       <Position>3</Position>
       <DataType>varchar(1000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="237" name="poster">
+    <column id="283" parent="236" name="poster">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="237" name="year_of_release">
+    <column id="284" parent="236" name="year_of_release">
       <Position>5</Position>
       <DataType>int(4)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="237" name="path">
+    <column id="285" parent="236" name="path">
       <Position>6</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="293" parent="237" name="PRIMARY">
+    <key id="286" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_film</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="294" parent="238" name="genre">
+    <column id="287" parent="237" name="genre">
       <Position>1</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="295" parent="238" name="PRIMARY">
+    <key id="288" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>genre</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="296" parent="239" name="name_film">
+    <column id="289" parent="238" name="name_user">
       <Position>1</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="239" name="id_film">
-      <Position>2</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="298" parent="239" name="id_film">
-      <ColNames>id_film</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="299" parent="239" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>name_film</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="300" parent="239" name="names_film_ibfk_1">
-      <ColNames>id_film</ColNames>
-      <RefSchemaName>films</RefSchemaName>
-      <RefTableName>films</RefTableName>
-      <RefColNames>id_film</RefColNames>
-    </foreign-key>
-    <column id="301" parent="240" name="id_token">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="302" parent="240" name="token">
+    <column id="290" parent="238" name="email">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="240" name="email">
-      <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="304" parent="240" name="date_token">
-      <Position>4</Position>
-      <DataType>datetime|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="305" parent="240" name="email">
+    <index id="291" parent="238" name="email">
       <ColNames>email</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="306" parent="240" name="PRIMARY">
+    <key id="292" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id_token</ColNames>
+      <ColNames>name_user</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="307" parent="240" name="tokens_ibfk_1">
+    <foreign-key id="293" parent="238" name="names_ibfk_1">
       <ColNames>email</ColNames>
       <RefSchemaName>films</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>email</RefColNames>
     </foreign-key>
-    <column id="308" parent="241" name="name_user">
+    <column id="294" parent="239" name="name_film">
       <Position>1</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="241" name="email">
+    <column id="295" parent="239" name="id_film">
+      <Position>2</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="296" parent="239" name="id_film">
+      <ColNames>id_film</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="297" parent="239" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>name_film</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="298" parent="239" name="names_film_ibfk_1">
+      <ColNames>id_film</ColNames>
+      <RefSchemaName>films</RefSchemaName>
+      <RefTableName>films</RefTableName>
+      <RefColNames>id_film</RefColNames>
+    </foreign-key>
+    <column id="299" parent="240" name="token">
+      <Position>1</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="300" parent="240" name="email">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="241" name="pass">
+    <column id="301" parent="240" name="date_token">
       <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="241" name="avatar">
-      <Position>4</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="312" parent="241" name="status_user">
-      <Position>5</Position>
-      <DataType>tinyint(1)|0s</DataType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="313" parent="241" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
+    <index id="302" parent="240" name="email">
       <ColNames>email</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="303" parent="240" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>token</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="314" parent="242" name="name_writers">
+    <foreign-key id="304" parent="240" name="tokens_ibfk_1">
+      <ColNames>email</ColNames>
+      <RefSchemaName>films</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>email</RefColNames>
+    </foreign-key>
+    <column id="305" parent="241" name="name_user">
       <Position>1</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="315" parent="242" name="PRIMARY">
+    <column id="306" parent="241" name="email">
+      <Position>2</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="307" parent="241" name="pass">
+      <Position>3</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="308" parent="241" name="avatar">
+      <Position>4</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="309" parent="241" name="status_user">
+      <Position>5</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="310" parent="241" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>email</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="311" parent="242" name="name_writers">
+      <Position>1</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="312" parent="242" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>name_writers</ColNames>
       <Primary>1</Primary>

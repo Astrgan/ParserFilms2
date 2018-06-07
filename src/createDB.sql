@@ -95,6 +95,7 @@ create table connections_genres(
 
 
 create table users(
+  name_user varchar(100) not null,
   email varchar(100) not null,
   pass varchar(100) not null,
   avatar varchar(100),
@@ -108,7 +109,7 @@ create table names(
   primary key(name_user),
   foreign key (email) references users(email)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
-
+/*
 create table comments(
   id_comment int not null auto_increment,
   comment varchar(5000) not null,
@@ -118,13 +119,12 @@ create table comments(
   foreign key (name_user) references users(name_user)
 
 )ENGINE=InnoDB CHARACTER SET=UTF8;
-
+*/
 create table tokens(
-  id_token int not null auto_increment,
   token varchar(100) not null,
   email varchar(100) not null,
   date_token DATETIME,
-  primary key(id_token),
+  primary key(token),
   foreign key (email) references users(email)
 
 )ENGINE=InnoDB CHARACTER SET=UTF8;
