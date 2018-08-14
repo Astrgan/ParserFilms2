@@ -5,7 +5,7 @@ use films;
 create table films(
   id_film int not null auto_increment,
   rating decimal(2,1),
-  description varchar(1000),
+  description varchar(10000),
   poster varchar(100),
   year_of_release int(4),
   path varchar(100),

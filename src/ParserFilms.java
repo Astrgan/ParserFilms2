@@ -31,7 +31,7 @@ public class ParserFilms {
              PreparedStatement statementWriters = connection.prepareStatement("INSERT INTO writers (name_writers) VALUE (?)");
              PreparedStatement statementConnWriters = connection.prepareStatement("INSERT INTO connections_writers (film, writers) VALUE (?, ?)")
 
-             ) {
+        ) {
 
             for (File film:films) {
 
@@ -39,13 +39,13 @@ public class ParserFilms {
                 String description = new String(Files.readAllBytes(Paths.get(film.getPath() + "/description.txt")));
                 String genres = new String(Files.readAllBytes(Paths.get(film.getPath() + "/genres.txt")));
                 String names = new String(Files.readAllBytes(Paths.get(film.getPath() + "/names.txt")));
-                String writers = new String(Files.readAllBytes(Paths.get(film.getPath() + "/Producer.txt")));
+                String writers = new String(Files.readAllBytes(Paths.get(film.getPath() + "/writers.txt")));
                 String year = new String(Files.readAllBytes(Paths.get(film.getPath() + "/year.txt")));
                 String countries = new String(Files.readAllBytes(Paths.get(film.getPath() + "/countries.txt")));
-
+                System.out.println(film.getPath());
                 statementFilms.setInt(1,5);
                 statementFilms.setString(2, description);
-                statementFilms.setString(3,"http://localhost/films/" + film.getName() + "/poster.png");
+                statementFilms.setString(3,"http://gebruder.tk/films/" + film.getName() + "/image.png");
                 statementFilms.setString(4, film.getPath() + "filmName");
                 statementFilms.setInt(5,Integer.parseInt(year.trim()));
                 statementFilms.executeUpdate();
@@ -56,11 +56,17 @@ public class ParserFilms {
 
 
                 String[] namesArray = names.split(" / ");
+
                 for (int i = 0; i<namesArray.length; i++) {
 
                     statementNames.setString(1, namesArray[i].trim());
                     statementNames.setInt(2, id);
-                    statementNames.executeUpdate();
+
+                    try {
+                        statementNames.executeUpdate();
+                    }catch (Exception e){
+
+                    }
                 }
 
                 String[] genresArray = genres.split(", ");
