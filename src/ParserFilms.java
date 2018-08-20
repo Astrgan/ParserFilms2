@@ -1,7 +1,6 @@
 import com.mysql.jdbc.Statement;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -10,9 +9,16 @@ import java.util.Properties;
 public class ParserFilms {
 
     ResultSet resultSet;
+
+
+    public String firstUpperCase(String word){
+        if(word == null || word.isEmpty()) return "";//или return word;
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
+
     void listFilms(){
 
-        File filmsFolder = new File("/var/www/html/films");
+        File filmsFolder = new File("C:\\Apache24\\htdocs\\films");
         File[] films = filmsFolder.listFiles();
         Properties connInfo = new Properties();
         connInfo.put("user", "alex");
@@ -45,7 +51,7 @@ public class ParserFilms {
                 System.out.println(film.getPath());
                 statementFilms.setInt(1,5);
                 statementFilms.setString(2, description);
-                statementFilms.setString(3,"http://gebruder.tk/films/" + film.getName() + "/image.png");
+                statementFilms.setString(3,"http://localhost/films/" + film.getName() + "/image.png");
                 statementFilms.setString(4, film.getPath() + "filmName");
                 statementFilms.setInt(5,Integer.parseInt(year.trim()));
                 statementFilms.executeUpdate();
@@ -73,18 +79,23 @@ public class ParserFilms {
 
                 for (int i = 0; i<genresArray.length; i++) {
                     String genre = genresArray[i].trim();
-                    try {
-                        statementGenres.setString(1, genre);
-                        statementGenres.executeUpdate();
-                        //System.out.println(genresArray[i].trim() + " - Добавлен");
-                    }catch (Exception e){
-                        //System.out.println(genresArray[i].trim() + " - Уже есть в базе");
+                    if(!genre.equals("... слова")) {
+                        genre = firstUpperCase(genre);
+                        try {
+
+
+                            statementGenres.setString(1, genre);
+                            statementGenres.executeUpdate();
+                            //System.out.println(genresArray[i].trim() + " - Добавлен");
+
+                        } catch (Exception e) {
+                            //System.out.println(genresArray[i].trim() + " - Уже есть в базе");
+                        }
+
+                        statementConnGenres.setInt(1, id);
+                        statementConnGenres.setString(2, genre);
+                        statementConnGenres.executeUpdate();
                     }
-
-                    statementConnGenres.setInt(1, id);
-                    statementConnGenres.setString(2, genre);
-                    statementConnGenres.executeUpdate();
-
                 }
 
 
