@@ -18,7 +18,7 @@ public class ParserFilms {
 
     void listFilms(){
 
-        File filmsFolder = new File("C:\\Apache24\\htdocs\\films");
+        File filmsFolder = new File("/var/www/html/films");
         File[] films = filmsFolder.listFiles();
         Properties connInfo = new Properties();
         connInfo.put("user", "alex");
@@ -51,9 +51,9 @@ public class ParserFilms {
                 System.out.println(film.getPath());
                 statementFilms.setInt(1,5);
                 statementFilms.setString(2, description);
-                statementFilms.setString(3,"http://localhost/films/" + film.getName() + "/image.png");
+                statementFilms.setString(3,"http://gebruder.tk/films/" + film.getName() + "/image.png");
                 statementFilms.setString(4, film.getPath() + "filmName");
-                statementFilms.setInt(5,Integer.parseInt(year.trim()));
+                statementFilms.setInt(5,Integer.parseInt(year.trim().substring(0,4)));
                 statementFilms.executeUpdate();
 
                 ResultSet generatedKeys = statementFilms.getGeneratedKeys();
@@ -79,7 +79,7 @@ public class ParserFilms {
 
                 for (int i = 0; i<genresArray.length; i++) {
                     String genre = genresArray[i].trim();
-                    if(!genre.equals("... слова")) {
+                    if(!genre.equals("... слова") && !genre.contains("-")) {
                         genre = firstUpperCase(genre);
                         try {
 
