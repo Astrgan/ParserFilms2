@@ -19,6 +19,8 @@ public class ParserFilms {
     void listFilms(){
 
         File filmsFolder = new File("/var/www/html/films");
+//        File filmsFolder = new File("/Users/alex/OtherForDevelopment/films");
+
         File[] films = filmsFolder.listFiles();
         Properties connInfo = new Properties();
         connInfo.put("user", "alex");
@@ -38,9 +40,9 @@ public class ParserFilms {
              PreparedStatement statementConnWriters = connection.prepareStatement("INSERT INTO connections_writers (film, writers) VALUE (?, ?)")
 
         ) {
-
+            int itr = 0;
             for (File film:films) {
-
+                if(film.getName().equals(".DS_Store")) continue;
                 String actors = new String(Files.readAllBytes(Paths.get(film.getPath() + "/actors.txt")));
                 String description = new String(Files.readAllBytes(Paths.get(film.getPath() + "/description.txt")));
                 String genres = new String(Files.readAllBytes(Paths.get(film.getPath() + "/genres.txt")));
@@ -48,11 +50,24 @@ public class ParserFilms {
                 String writers = new String(Files.readAllBytes(Paths.get(film.getPath() + "/writers.txt")));
                 String year = new String(Files.readAllBytes(Paths.get(film.getPath() + "/year.txt")));
                 String countries = new String(Files.readAllBytes(Paths.get(film.getPath() + "/countries.txt")));
+                String iframe = new String(Files.readAllBytes(Paths.get(film.getPath() + "/iframe.txt")));
+                String rating;
+                try {
+                    rating = new String(Files.readAllBytes(Paths.get(film.getPath() + "/rating.txt")));
+                }catch (Exception e){
+                    rating = "5.9";
+                }
+
+
                 System.out.println(film.getPath());
-                statementFilms.setInt(1,5);
+                if (!rating.isEmpty()) {
+                    statementFilms.setDouble(1, Double.parseDouble(rating));
+                } else {
+                    statementFilms.setDouble(1, 5.9);
+                }
                 statementFilms.setString(2, description);
                 statementFilms.setString(3,"http://gebruder.tk/films/" + film.getName() + "/image.png");
-                statementFilms.setString(4, film.getPath() + "filmName");
+                statementFilms.setString(4, iframe);
                 statementFilms.setInt(5,Integer.parseInt(year.trim().substring(0,4)));
                 statementFilms.executeUpdate();
 
@@ -146,8 +161,9 @@ public class ParserFilms {
                     statementConnWriters.setString(2, writer.trim());
                     statementConnWriters.executeUpdate();
                 }
-
+                itr++;
             }//for
+            System.out.println("itr = " + itr);
         }catch (Exception e){
             e.printStackTrace();
         }
