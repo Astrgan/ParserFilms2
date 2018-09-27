@@ -66,7 +66,7 @@ public class ParserFilms {
                     statementFilms.setDouble(1, 5.9);
                 }
                 statementFilms.setString(2, description);
-                statementFilms.setString(3,"http://gebruder.tk/films/" + film.getName() + "/image.png");
+                statementFilms.setString(3,"/films/" + film.getName() + "/image.png");
                 statementFilms.setString(4, iframe);
                 statementFilms.setInt(5,Integer.parseInt(year.trim().substring(0,4)));
                 statementFilms.executeUpdate();
